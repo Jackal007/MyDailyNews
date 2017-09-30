@@ -17,14 +17,16 @@ class WifiManagePassSpider(MySpider):
         for n in range(6, 16):
             r = its.product(words, repeat=n)
             for i in r:
+                i = "".join(i)
                 self.postdata = {
                 "pcPassword":i,
                 }
+                print(i)
                 page = requests.post(self.start_url, data=self.postdata)
+#                 page = requests.get(self.start_url)
+#                 print(page)
                 if page.status_code != 200:
-                    print(i)
-                    print("yes -->" + str(i))
-
+                    return
 
 if __name__ == "__main__":
     t = WifiManagePassSpider()
