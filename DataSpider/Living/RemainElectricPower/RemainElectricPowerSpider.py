@@ -6,10 +6,11 @@ Created on 2017年9月19日
 import requests
 from bs4 import BeautifulSoup
 from Tools import MyHeader, MyProxy
+from Tools.MySpider import MySpider
 
-class RemainElectricPowerSpider():
+class RemainElectricPowerSpider(MySpider):
     def __init__(self, xiaoqu, lou, roomId, dateStart, dateEnd):
-        self.start_url = 'http://elec.xmu.edu.cn/PdmlWebSetup/Pages/SMSMain.aspx'
+        super.__init__('http://elec.xmu.edu.cn/PdmlWebSetup/Pages/SMSMain.aspx')
         self.postdata = {
             '__EVENTTARGET':'',
             '__EVENTARGUMENT':'',
@@ -38,16 +39,6 @@ class RemainElectricPowerSpider():
             
             }
         
-    def getPage(self):
-        header = {
-            'User-Agent':MyHeader.getHeader()
-        }
-        proxy = {
-            'http':MyProxy.getProxy()
-        }
-        r = requests.put(self.start_url, headers=header, data=self.postdata)
-        return r.content
-    
     def getRemainElectricPower(self):
         r = self.getPage()
         soup = BeautifulSoup(r)

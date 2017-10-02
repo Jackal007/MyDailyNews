@@ -2,15 +2,17 @@
 Created on 2017年9月30日
 
 @author: zheng
+
+获取路由器的管理员密码
 '''
+from Tools.MySpider import MySpider
 import requests
 import string
-from Tools.MySpider import MySpider
 import itertools as its
 
-class WifiManagePassSpider(MySpider):
+class RouterManagePassSpider(MySpider):
     def __init__(self):
-        self.start_url = "http://192.168.1.1/"
+        super.__init__('http://192.168.1.1')
         
     def tryPass(self):
         words = string.ascii_lowercase + "1234567890"
@@ -29,5 +31,5 @@ class WifiManagePassSpider(MySpider):
                     return
 
 if __name__ == "__main__":
-    t = WifiManagePassSpider()
+    t = RouterManagePassSpider()
     t.tryPass()
