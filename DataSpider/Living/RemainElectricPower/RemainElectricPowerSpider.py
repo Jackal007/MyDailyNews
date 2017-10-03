@@ -10,7 +10,7 @@ from Tools.MySpider import MySpider
 
 class RemainElectricPowerSpider(MySpider):
     def __init__(self, xiaoqu, lou, roomId, dateStart, dateEnd):
-        super.__init__('http://elec.xmu.edu.cn/PdmlWebSetup/Pages/SMSMain.aspx')
+        MySpider.__init__(self,'http://elec.xmu.edu.cn/PdmlWebSetup/Pages/SMSMain.aspx')
         self.postdata = {
             '__EVENTTARGET':'',
             '__EVENTARGUMENT':'',
@@ -40,7 +40,7 @@ class RemainElectricPowerSpider(MySpider):
             }
         
     def getRemainElectricPower(self):
-        r = self.getPage()
+        r = self.getPage('http://elec.xmu.edu.cn/PdmlWebSetup/Pages/SMSMain.aspx')
         soup = BeautifulSoup(r)
         with open('temp', 'wb')as f:
             f.write(r)

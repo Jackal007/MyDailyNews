@@ -7,6 +7,7 @@ Created on 2017年9月30日
 '''
 
 import requests
+from bs4 import BeautifulSoup 
 from Tools import MyHeader, MyProxy
 
 class MySpider():
@@ -14,5 +15,6 @@ class MySpider():
         self.start_url = start_url
 
     def getPage(self, url):
-        r = requests.get(url)
-        return r.content
+        page = requests.get(url, headers=MyHeader.getHeader(), proxies=MyProxy.getProxy())
+        soup = BeautifulSoup(page.text, "lxml")
+        return page, soup

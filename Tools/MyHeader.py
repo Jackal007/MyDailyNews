@@ -1,6 +1,7 @@
 from random import randint
 
-headers = {'opera':['Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60',
+def getHeader():
+    headers = {'opera':['Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60',
                      'Opera/8.0 (Windows NT 5.1; U; en)',
                      'Mozilla/5.0 (Windows NT 5.1; U; en; rv:1.8.1) Gecko/20061208 Firefox/2.0.0 Opera 9.50',
                      'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera 9.50',
@@ -15,6 +16,11 @@ headers = {'opera':['Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHT
                       'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.133 Safari/534.16',
                       ],
     }
+    allheaders = []
+    for i in headers.values():
+        for j in i:
+            allheaders.append(j)
+    return {'User-Agent':allheaders[randint(0, len(allheaders) - 1)]}
 
-def getHeader():
-    return headers['opera'][0]
+if __name__ == '__main__':
+    print(getHeader())

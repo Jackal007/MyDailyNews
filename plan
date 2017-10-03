@@ -1,0 +1,22 @@
+-DataSpider
+	-Living
+		-RemainElectricPower
+			-RemainElectricPowerSpider
+		-Wifi
+			-RouterManagePassSpider
+			-WifiPassSpider
+	-Study
+		-Class
+			-BKXKSpider
+		-Score
+			-ScoreSpider
+	-Fun
+		-Joke
+			-QSBKSpider
+	-News
+		-SchoolNews
+			-XYNews
+				-XYNewsSpider
+		-SocialNews
+			-SocialNewsSpider
+	
