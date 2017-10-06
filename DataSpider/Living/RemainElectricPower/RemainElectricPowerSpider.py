@@ -3,15 +3,14 @@ Created on 2017年9月19日
 
 @author: jack
 '''
-import requests
-from bs4 import BeautifulSoup
-from Tools import MyHeader, MyProxy
 from Tools.MySpider import MySpider
 
 class RemainElectricPowerSpider(MySpider):
     def __init__(self, xiaoqu, lou, roomId, dateStart, dateEnd):
-        MySpider.__init__(self,'http://elec.xmu.edu.cn/PdmlWebSetup/Pages/SMSMain.aspx')
-        self.postdata = {
+        MySpider.__init__(self, 'http://elec.xmu.edu.cn/PdmlWebSetup/Pages/SMSMain.aspx')
+        
+    def getRemainElectricPower(self):
+        postdata = {
             '__EVENTTARGET':'',
             '__EVENTARGUMENT':'',
             '__LASTFOCUS':'',
@@ -36,17 +35,12 @@ class RemainElectricPowerSpider(MySpider):
             'dxgvElec$DXSelInput':'',
             'dxgvElec$CallbackState':'/wEWBB4ERGF0YQUsQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBSEFBY0EeBVN0YXRlBVhCd1lIQUFJQkJ3RUNBUWNCQWdFSEFRSUJCd0VDQVFjQ0FnRUhBQWNBQndBSEFBVUFBQUNBQ1FJQUNRSUFBZ0FEQndRQ0FBY0FBZ0VIQUFjQUFnRUhBQWNB',
             'DXScript':'1_42,1_74,2_22,2_29,1_46,1_54,2_21,1_67,1_64,2_16,2_15,1_52,1_65,3_7',
-            
             }
-        
-    def getRemainElectricPower(self):
-        r = self.getPage('http://elec.xmu.edu.cn/PdmlWebSetup/Pages/SMSMain.aspx')
-        soup = BeautifulSoup(r)
-        with open('temp', 'wb')as f:
-            f.write(r)
+        r, soup = self.getPage(self.start_url,postdata=postdata,url2=self.start_url)
+        print(r.text)
         remainElectricPower = soup.select('tr[id="dxgvElec_DXDataRow0"]')
-        print(remainElectricPower)  # .select('td')[-1].string
-        return remainElectricPower          
-
-t = RemainElectricPowerSpider('09', '2号楼', '0609', '2017-9-1', '2017-9-19')
-print(t.getRemainElectricPower())
+        return remainElectricPower   
+           
+if __name__ == '__main__':
+    t = RemainElectricPowerSpider('09', '2号楼', '0609', '2017-9-1', '2017-9-19')
+    print(t.getRemainElectricPower())
