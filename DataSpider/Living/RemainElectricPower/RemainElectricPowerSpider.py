@@ -36,10 +36,9 @@ class RemainElectricPowerSpider(MySpider):
             'dxgvElec$CallbackState':'/wEWBB4ERGF0YQUsQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBSEFBY0EeBVN0YXRlBVhCd1lIQUFJQkJ3RUNBUWNCQWdFSEFRSUJCd0VDQVFjQ0FnRUhBQWNBQndBSEFBVUFBQUNBQ1FJQUNRSUFBZ0FEQndRQ0FBY0FBZ0VIQUFjQUFnRUhBQWNB',
             'DXScript':'1_42,1_74,2_22,2_29,1_46,1_54,2_21,1_67,1_64,2_16,2_15,1_52,1_65,3_7',
             }
-        r, soup = self.getPage(self.start_url,postdata=postdata,url2=self.start_url)
-        print(r.text)
-        remainElectricPower = soup.select('tr[id="dxgvElec_DXDataRow0"]')
-        return remainElectricPower   
+        _, soup = self.getPage(self.start_url,postdata=postdata,url2=self.start_url)
+#         remainElectricPower = soup.select('tr[id="dxgvElec_DXDataRow0"]')
+        return soup   
            
 if __name__ == '__main__':
     t = RemainElectricPowerSpider('09', '2号楼', '0609', '2017-9-1', '2017-9-19')

@@ -67,5 +67,3 @@ if __name__ == '__main__':
     t = MyProxy()
     t.downloadProxy()
     print(t.getAProxy())
-
-    

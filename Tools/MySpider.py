@@ -13,13 +13,20 @@ from Tools import MyHeader, MyProxy
 class MySpider():
     def __init__(self, start_url):
         self.start_url = start_url
+        
+    def login(self, url, postdata):
+        session = requests.Session()
+        try:
+            session.post(url, headers=MyHeader.getHeader(), proxies=MyProxy.getProxy(), data=postdata)
+        except:
+            print('login fail')
+        return session
 
-    def getPage(self, url, postdata=None, url2=None):
-        if postdata == None:
-            page = requests.get(url, headers=MyHeader.getHeader(), proxies=MyProxy.getProxy())
-        else:
-            s = requests.Session()
-            s.post(url, headers=MyHeader.getHeader(), proxies=MyProxy.getProxy(), data=postdata)
-            page = s.get(url2, headers=MyHeader.getHeader(), proxies=MyProxy.getProxy())
+    def getPage(self, url, session=requests):
+        try:
+            page = session.get(url, headers=MyHeader.getHeader(), proxies=MyProxy.getProxy())
+        except:
+            print('get page fail')
         soup = BeautifulSoup(page.text, "lxml")
+        print(page.status_code)
         return page, soup
