@@ -15,5 +15,8 @@ class SeleniumSpider(unittest.TestCase):
         self.driver = webdriver.Chrome()
         self.driver.get(self.start_url)
         
+    def getPage(self):
+        pass
+        
     def tearDown(self):
         self.driver.close()
