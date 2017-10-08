@@ -3,11 +3,11 @@ Created on 2017年10月6日
 爬取附近的外卖信息
 @author: zheng
 '''
-from Tools.MySpider import MySpider
+from Tools.RequestsSpider import RequestsSpider
 
-class ElemeSpider(MySpider):
+class ElemeSpider(RequestsSpider):
     def __init__(self):
-        MySpider.__init__(self, 'http://waimai.meituan.com/home/ws7gpfn21jvq')
+        RequestsSpider.__init__(self, 'http://waimai.meituan.com/home/ws7gpfn21jvq')
         
     def getRestaurant(self):
         #=======================================================================

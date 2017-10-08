@@ -28,12 +28,12 @@ class RemainElectricPowerSpider(SeleniumSpider):
         submit = driver.find_element_by_id("dxbtnQuery_CD")
         submit.click()
         
-        page, soup = driver.page_source, BeautifulSoup(driver.page_source)
+        page, soup = driver.page_source, BeautifulSoup(driver.page_source, "lxml")
         return page, soup
     
     def getRemainElectricPower(self):
         _, soup = self.getPage()
-        remain=soup.select('#lableft')[0].string
+        remain = soup.select('#lableft')[0].string
         return remain
         
     
