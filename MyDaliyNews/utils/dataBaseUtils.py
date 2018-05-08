@@ -17,7 +17,3 @@ class MyDataBase:
     def close(self):
         self.cursor.close()
         self.db.close()
-
-
-if __name__=='__main__':
-    print("a module used to connect db")
