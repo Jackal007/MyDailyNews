@@ -1,4 +1,7 @@
-import requests, os, time, sys
+import requests
+import os
+import time
+import sys
 from bs4 import BeautifulSoup
 from MyDaliyNews.utils.spiderUtils import RequestsSpider
 
@@ -6,15 +9,15 @@ from MyDaliyNews.utils.spiderUtils import RequestsSpider
 抓取mzitu.com下的所有图片
 '''
 
+
 class MeiziPicDownloader(RequestsSpider):
     def __init__(self):
         self.site = 'http://www.mzitu.com/page/'
-        
-        
+
     def getPage(self, url):
         '''
         @url:url
-                        获取当前链接的页面(顺便去掉没用的东西)
+        获取当前链接的页面(顺便去掉没用的东西)
         '''
         try:
             r = requests.get(url).content
@@ -22,11 +25,11 @@ class MeiziPicDownloader(RequestsSpider):
             return page
         except:
             return []
-    
+
     def getSets(self, url):
         '''
         @url:url
-                        获取当前链接的页面下的所有链接
+        获取当前链接的页面下的所有链接
         '''
         links, titles = [], []
         try:
@@ -41,13 +44,13 @@ class MeiziPicDownloader(RequestsSpider):
             return links, titles
         except:
             return []
-            
+
     def broad(self, url):
         '''
                         广度优先小爬爬函数
         @url:网址
         '''
-        
+
         # 先把当前页面的图片保存下来
         i = 1
         while True:
@@ -57,11 +60,12 @@ class MeiziPicDownloader(RequestsSpider):
                 number = link.split('/')[-1]
                 SetDownloader.SetDownloader(number, title).start()
             i += 1
-                
+
     def start(self):
         print('big start')
         self.broad(self.site)
         print('big over')
+
 
 '''
 抓取一个标题下的所有美女图片
@@ -79,12 +83,12 @@ class SetDownloader(RequestsSpider):
 #             os.mkdir(self.directory)
         except:
             pass
-        
+
     def savePic(self, name, content):
         '''
         @name:图片名
         @content:图片内容
-        '''        
+        '''
         # 保存图片
         if sys.getsizeof(content) > 20480:
             print('saving picture ', name)
@@ -93,7 +97,7 @@ class SetDownloader(RequestsSpider):
                     pic.write(content)
             except:
                 pass
-        
+
     def getPage(self, url):
         '''
         @url:url
@@ -105,7 +109,7 @@ class SetDownloader(RequestsSpider):
             return page
         except:
             return []
-    
+
     def getLinks(self, url):
         '''
         @url:url
@@ -118,13 +122,13 @@ class SetDownloader(RequestsSpider):
             if 'http' not in i['href']:
                 i['href'] = self.site + i['href']
             if '上一' in i.span.string \
-            or '下一' in i.span.string:
+                    or '下一' in i.span.string:
                 continue
             links.append(i['href'])
         return links
 #         except:
 #             return []
-        
+
     def getPics(self, url):
         '''
         @url:url
@@ -136,13 +140,15 @@ class SetDownloader(RequestsSpider):
         for i in picPage.select('img'):
             if 'http' not in i['src']:
                 i['src'] = self.site + i['src']
-            pic, name = requests.get(i['src'], proxies=MyProxy.getProxy(), headers=MyHeader.getHeader()), i['src'].split('/')[-1]
+            pic, name = requests.get(i['src'], proxies=MyProxy.getProxy(
+            ), headers=MyHeader.getHeader()), i['src'].split('/')[-1]
             print(pic.status_code)
-            pics.append(pic); names.append(name)
+            pics.append(pic)
+            names.append(name)
         return pics, names
 #         except:
 #             return []
-            
+
     def broad(self, url):
         '''
                         广度优先小爬爬函数
@@ -156,21 +162,21 @@ class SetDownloader(RequestsSpider):
             print('getting page -->' + links[i])
             # 先保存改页面的图片
             pics, names = self.getPics(links[i])
-            for pic, name in zip(pics, names) :
+            for pic, name in zip(pics, names):
                 self.savePic(name, pic)
             # 将链接添加到数组的后面
             links.extend(self.getLinks(links[i]))
             # 对保存的链接进行去重，排序
             links = [i for i in set(links)]
-            links = sorted(links, key=lambda l:int(l.split('/')[-1]))
+            links = sorted(links, key=lambda l: int(l.split('/')[-1]))
             i += 1
-                
+
     def start(self):
         print('start')
         self.broad(self.site)
         print('over')
-    
+
+
 if __name__ == '__main__':
     t = SetDownloader('38709', 'hh')
     t.start()
-

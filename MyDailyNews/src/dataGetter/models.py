@@ -1,15 +1,16 @@
 from django.db import models
 
 # Create your models here.
-class SimplifyNews():
+
+
+class SimplifyNews(models.Model):
     '''
         精简版的新闻类
     '''
-
-    def __init__(self, title, summary, url):
-        self.title = title
-        self.summary = summary
-        self.url = url
+    id = models.AutoField(primary_key=True, max_length=10)
+    title = models.CharField(max_length=200)
+    summary = models.CharField(max_length=500)
+    url = models.CharField(max_length=500)
 
     def __str__(self):
         return '{0}:\n{1}'.format(self.title, self.summary)
@@ -28,10 +29,6 @@ class News(SimplifyNews):
     '''
         基本版的新闻类
     '''
-
-    def __init__(self, title, datetime, sumary,
-                 content, pictures, url):
-        SimplifyNews.__init__(self,title, sumary, url)
-        self.content = content
-        self.datetime = datetime
-        self.pictures = pictures
+    content = models.TextField(max_length=5000)
+    datetime = models.DateTimeField()
+    pictures = models.CharField(max_length=500)
