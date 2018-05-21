@@ -1,0 +1,30 @@
+信息收集渠道：
+1.页面获取（主要是公众号的信息获取）
+2.微信获取
+3.qq获取
+==========================================
+
+-DataSpider
+	-Living
+		-RemainElectricPower
+			-RemainElectricPowerSpider
+		-Wifi
+			-RouterManagePassSpider
+			-WifiPassSpider
+	-Study
+		-Class
+			-BKXKSpider
+		-Score
+			-ScoreSpider
+	-Fun
+		-Joke
+			-QSBKSpider
+		-GirlsPic
+			-MzituPic
+	-News
+		-SchoolNews
+			-XYNews
+				-XYNewsSpider
+		-SocialNews
+			-SocialNewsSpider
+	
